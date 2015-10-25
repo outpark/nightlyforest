@@ -1,0 +1,43 @@
+{% extends "header.html" %}
+{% block body %}
+
+<body>
+<h3>Forest</h3>
+<form action="{{ url_for('add_post') }}" method="post">
+<div class="input-group input-group-sm">
+  <span class="input-group-addon" id="sizing-addon3">#</span>
+  <input type="text" class="form-control" name="hashtag" aria-describedby="sizing-addon3">
+</div>
+<div class="postbox">
+	
+		<p><textarea class="form-control" rows="4" type="text" name="text" placeholder="What's on your mind?"></textarea>
+
+		<input class="btn btn-default btn-sm pull-right" type="submit" value="Post" style="margin: 10px;">
+	
+</div>
+</form>
+<br>
+<hr>
+<div>
+<ul class="list-group">
+{% for message in messages %}
+<li class="list-group-item"><small>by</small><b> {{ message[6] }} </b><small><a href="">#{{ message[4] }}</a></small><br><br> {{ message[2] }} <small>&mdash; {{ message[3]|datetimeformat }}</small></li>
+{% else %}
+<li><em>There's no message so far.</em>
+{% endfor %}
+</ul>
+</div>
+{% if request.endpoint == 'board' %}
+<nav>
+  <ul class="pager">
+    
+    <li><a href="{{ url_for('board', page = prev_page) }}">Previous</a></li>
+    <li><a href="{{ url_for('board', page = next_page) }}">Next</a></li>
+
+  </ul>
+</nav>
+{% endif %}
+</body>
+
+
+{% endblock %}
